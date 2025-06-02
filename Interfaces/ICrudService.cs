@@ -2,7 +2,7 @@ using Emery_ChinookCrudApp.Models.Entities;
 
 namespace Emery_ChinookCrudApp.Interfaces;
 
-public interface ICrudSerivce {
+public interface ICrudService {
     // ----------------------------
     // BASIC CRUD METHODS
     // ----------------------------
