@@ -1,0 +1,100 @@
+
+===== CRUD SERVICE TESTS =====
+
+>> 1) Adding new customer...
+Created customer: Test User with ID: 60
+>> 2) Updating track price...
+Price update successful: True
+   => New price: 2.99
+>> 3) Creating new album for artist...
+Created album: Test Album with ID: 348
+>> 4) Deleting a playlist...
+Playlist deleted: True
+
+>> 5) Updating tracks by composer 'AC/DC' to $4.44...
+Updated 8 track(s).
+   => Verifying update...
+   - Go Down -> $4.44
+   - Dog Eat Dog -> $4.44
+   - Let There Be Rock -> $4.44
+   - Bad Boy Boogie -> $4.44
+   - Problem Child -> $4.44
+   - Overdose -> $4.44
+   - Hell Ain't A Bad Place To Be -> $4.44
+   - Whole Lotta Rosie -> $4.44
+
+>> 6) Deleting customers from 'Canada'...
+Deleted 8 customer(s).
+
+>> 7) Increasing prices of all tracks in genre ID 1 by 10%...
+Updated 1297 track(s).
+
+>> 8) Deleting all empty playlists...
+Deleted 4 empty playlist(s).
+
+>> 9) Renaming composer 'U2' to 'U2 (Legacy)'...
+Renamed 44 track(s).
+   => Verifying rename...
+   - Zoo Station -> U2 (Legacy)
+   - Even Better Than The Real Thing -> U2 (Legacy)
+   - One -> U2 (Legacy)
+   - Until The End Of The World -> U2 (Legacy)
+   - Who's Gonna Ride Your Wild Horses -> U2 (Legacy)
+   - So Cruel -> U2 (Legacy)
+   - The Fly -> U2 (Legacy)
+   - Mysterious Ways -> U2 (Legacy)
+   - Tryin' To Throw Your Arms Around The World -> U2 (Legacy)
+   - Ultraviolet (Light My Way) -> U2 (Legacy)
+   - Acrobat -> U2 (Legacy)
+   - Love Is Blindness -> U2 (Legacy)
+   - The Three Sunrises -> U2 (Legacy)
+   - Spanish Eyes -> U2 (Legacy)
+   - Sweetest Thing -> U2 (Legacy)
+   - Love Comes Tumbling -> U2 (Legacy)
+   - Bass Trap -> U2 (Legacy)
+   - Walk To The Water -> U2 (Legacy)
+   - Hallelujah Here She Comes -> U2 (Legacy)
+   - Endless Deep -> U2 (Legacy)
+   - A Room At The Heartbreak Hotel -> U2 (Legacy)
+   - Trash, Trampoline And The Party Girl -> U2 (Legacy)
+   - Pride (In The Name Of Love) -> U2 (Legacy)
+   - New Year's Day -> U2 (Legacy)
+   - With Or Without You -> U2 (Legacy)
+   - I Still Haven't Found What I'm Looking For -> U2 (Legacy)
+   - Sunday Bloody Sunday -> U2 (Legacy)
+   - Bad -> U2 (Legacy)
+   - Where The Streets Have No Name -> U2 (Legacy)
+   - I Will Follow -> U2 (Legacy)
+   - The Unforgettable Fire -> U2 (Legacy)
+   - Desire -> U2 (Legacy)
+   - When Love Comes To Town -> U2 (Legacy)
+   - Angel Of Harlem -> U2 (Legacy)
+   - Sunday Bloody Sunday -> U2 (Legacy)
+   - Seconds -> U2 (Legacy)
+   - New Year's Day -> U2 (Legacy)
+   - Like A Song... -> U2 (Legacy)
+   - Drowning Man -> U2 (Legacy)
+   - The Refugee -> U2 (Legacy)
+   - Two Hearts Beat As One -> U2 (Legacy)
+   - Red Light -> U2 (Legacy)
+   - Surrender -> U2 (Legacy)
+   - "40" -> U2 (Legacy)
+
+>> 10) Deleting customers with no invoices...
+Deleted 1 customer(s) with no invoices.
+
+>> 11) Renaming all albums with 'Rock' in the title (appending '[Updated]')...
+Renamed 7 album(s).
+   => Sample result:
+   - For Those About To Rock We Salute You [Updated]
+   - Let There Be Rock [Updated]
+   - Deep Purple In Rock [Updated]
+   - Rock In Rio [CD1] [Updated]
+   - Rock In Rio [CD2] [Updated]
+   - Pure Cult: The Best Of The Cult (For Rockers, Ravers, Lovers & Sinners) [UK] [Updated]
+   - Hot Rocks, 1964-1971 (Disc 1) [Updated]
+
+>> 12) Deleting tracks that have never been purchased...
+Deleted 1757 unused track(s).
+
+===== ALL TESTS COMPLETE =====

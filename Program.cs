@@ -22,9 +22,6 @@ _serviceProvider = services.BuildServiceProvider();
 _verifyService = _serviceProvider.GetRequiredService<VerifyService>();
 _crudService = _serviceProvider.GetRequiredService<CrudService>();
 
-
-/*
-
 Console.WriteLine();
 
 Console.WriteLine("===== CRUD SERVICE TESTS =====\n");
@@ -48,7 +45,6 @@ Console.WriteLine($"Created album: {album.Title} with ID: {album.AlbumId}");
 Console.WriteLine(">> 4) Deleting a playlist...");
 bool deleted = await _crudService.DeletePlaylistAsync(1);
 Console.WriteLine($"Playlist deleted: {deleted}\n");
-
 
 // --- INTRICATE TESTS ---
 
@@ -106,5 +102,3 @@ int unpurchased = await _crudService.DeleteTracksNotPurchasedAsync();
 Console.WriteLine($"Deleted {unpurchased} unused track(s).");
 
 Console.WriteLine("\n===== ALL TESTS COMPLETE =====");
-
-*/

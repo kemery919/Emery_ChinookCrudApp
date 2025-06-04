@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Emery_ChinookCrudApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250602042318_EneryInitialMigration")]
-    partial class EneryInitialMigration
+    [Migration("20250604052632_EmeryInitialMigration")]
+    partial class EmeryInitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
