@@ -231,6 +231,8 @@ public class CrudService : ICrudService {
 
       await _context.SaveChangesAsync();
 
+      // count = notPurchasedTracks.Count;
+
       return count;
     }
 }
