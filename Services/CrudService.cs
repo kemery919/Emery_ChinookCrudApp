@@ -31,17 +31,17 @@ public class CrudService : ICrudService {
 
     public async Task<bool> UpdateTrackPriceAsync(int trackId, decimal newPrice){
         
-        bool result = false;
+      bool result = false;
 
-        var track = await _context.Track.FindAsync(trackId);
+      var track = await _context.Track.FindAsync(trackId);
 
-        if(track != null){
-          track.UnitPrice = newPrice;
-          await _context.SaveChangesAsync();
-          result = true;
-        }
+      if(track != null){
+        track.UnitPrice = newPrice;
+        await _context.SaveChangesAsync();
+        result = true;
+      }
 
-        return result;
+      return result;
     }
 
     public async Task<bool> DeletePlaylistAsync(int playlistId){
@@ -71,50 +71,37 @@ public class CrudService : ICrudService {
       await _context.SaveChangesAsync();
 
       return addAlbum;
-
     }
 
     public async Task<int> UpdateTracksByComposerAsync(string composer, decimal newPrice){
         
-      int count = 0;
-
       var compTracks = await _context.Track
         .Where(t => t.Composer == composer)
         .ToListAsync();
 
       foreach(var track in compTracks){
         track.UnitPrice = newPrice;
-
-        count ++;
       }
 
       await _context.SaveChangesAsync();
 
-      return count;
+      return compTracks.Count;
     }
 
     public async Task<int> DeleteCustomersByCountryAsync(string country){
-        
-        int count = 0;
+   
+      var deletedCustomers = await _context.Customer
+        .Where(c => c.Country == country)
+        .ToListAsync();
 
-        var deletedCustomers = await _context.Customer
-          .Where(c => c.Country == country)
-          .ToListAsync();
-        
-        foreach(var customer in deletedCustomers){
-          _context.Customer.Remove(customer);
+      _context.Customer.RemoveRange(deletedCustomers);
 
-          count ++;
-        }
+      await _context.SaveChangesAsync();
 
-        await _context.SaveChangesAsync();
-
-        return count;
+      return deletedCustomers.Count;
     }
 
     public async Task<int> AdjustTrackPricesByGenreAsync(int genreId, decimal percentIncrease){
-        
-      int count = 0;
 
       var adjustTracksPercent = await _context.Track
         .Where(t => t.GenreId == genreId)
@@ -122,35 +109,27 @@ public class CrudService : ICrudService {
       
       foreach(var track in adjustTracksPercent){
         track.UnitPrice = track.UnitPrice * (1 + (percentIncrease / 100));
-
-        count ++;
       }
 
       await _context.SaveChangesAsync();
 
-      return count;
+      return adjustTracksPercent.Count;
     }
 
     public async Task<int> DeleteEmptyPlaylistsAsync(){
-      int count = 0;
 
       var emptyPlaylist = await _context.Playlist
         .Where(p => p.Tracks.Count == 0)
         .ToListAsync();
 
-      foreach(var playlist in emptyPlaylist){
-        _context.Playlist.Remove(playlist);
-
-        count ++;
-      }
+      _context.Playlist.RemoveRange(emptyPlaylist);
 
       await _context.SaveChangesAsync();
 
-      return count;
+      return emptyPlaylist.Count;
     }
 
     public async Task<int> RenameComposerAsync(string oldName, string newName){
-      int count = 0;
 
       var composerTracks = await _context.Track
         .Where(t => t.Composer == oldName)
@@ -158,39 +137,39 @@ public class CrudService : ICrudService {
       
       foreach(var track in composerTracks){
         track.Composer = newName;
-
-        count ++;
       }
 
       await _context.SaveChangesAsync();
 
-      return count;
+      return composerTracks.Count;
     }
 
     public async Task<int> DeleteCustomersWithNoInvoicesAsync(){
-      int count = 0;
+      
+      // var customersWithInvoices = await _context.Invoice
+      //   .Select(inv => inv.CustomerId)
+      //   .ToListAsync();
 
-      var customersWithInvoices = await _context.Invoice
-        .Select(inv => inv.CustomerId)
+      // var missingCustomers = await _context.Customer
+      //   .Where(customer => !customersWithInvoices.Contains(customer.CustomerId))
+      //   .ToListAsync();
+
+      // foreach(var customer in missingCustomers){
+      //   _context.Customer.Remove(customer);
+      // }
+
+      var customersWithNoInvoices = await _context.Customer
+        .Where(customer => !_context.Invoice.Any(inv => inv.CustomerId == customer.CustomerId))
         .ToListAsync();
 
-      var missingCustomers = await _context.Customer
-        .Where(customer => !customersWithInvoices.Contains(customer.CustomerId))
-        .ToListAsync();
-
-      foreach(var customer in missingCustomers){
-        _context.Customer.Remove(customer);
-
-        count ++;
-      }
+      _context.Customer.RemoveRange(customersWithNoInvoices);
 
       await _context.SaveChangesAsync();
 
-      return count;
+      return customersWithNoInvoices.Count;
     }
 
     public async Task<int> RenameAlbumsContainingKeywordAsync(string keyword, string appendText){
-      int count = 0;
 
       var albumKeyword = await _context.Album
         .Where(a => a.Title.Contains(keyword))
@@ -198,41 +177,46 @@ public class CrudService : ICrudService {
       
       foreach(var album in albumKeyword){
         album.Title += appendText;
-        
-        count ++;
       }
 
       await _context.SaveChangesAsync();
 
-      return count;
+      return albumKeyword.Count;
     }
 
     public async Task<int> DeleteTracksNotPurchasedAsync(){
-      int count = 0;
-
-      // var notPurchedTracks = await _context.Track
-      //   .Where(track => !_context.InvoiceLine.Any(invLine => invLine.TrackId == track.TrackId))
-      //   .ToListAsync();
-
-      var purchasedTrackIds = await _context.InvoiceLine
-        .Select(invLine => invLine.TrackId)
-        .Distinct()
-        .ToListAsync();
       
       var notPurchasedTracks = await _context.Track
-        .Where(track => !purchasedTrackIds.Contains(track.TrackId))
+        .Where(track => !_context.InvoiceLine.Any(invLine => invLine.TrackId == track.TrackId))
         .ToListAsync();
-      
-      foreach(var track in notPurchasedTracks){
-        _context.Track.Remove(track);
 
-        count ++;
-      }
+      _context.Track.RemoveRange(notPurchasedTracks);
 
       await _context.SaveChangesAsync();
 
-      // count = notPurchasedTracks.Count;
+      return notPurchasedTracks.Count;
 
-      return count;
+      // Another way to do it below:
+
+      // int count = 0;
+
+      // var purchasedTrackIds = await _context.InvoiceLine
+      //   .Select(invLine => invLine.TrackId)
+      //   .Distinct()
+      //   .ToListAsync();
+      
+      // var notPurchasedTracks = await _context.Track
+      //   .Where(track => !purchasedTrackIds.Contains(track.TrackId))
+      //   .ToListAsync();
+      
+      // foreach(var track in notPurchasedTracks){
+      //   _context.Track.Remove(track);
+
+      //   count ++;
+      // }
+
+      // await _context.SaveChangesAsync();
+
+      // return count;
     }
 }
